@@ -21,10 +21,8 @@ if %errorlevel% neq 0 (
 
 "%GIT%" add .
 "%GIT%" commit -m "update"
-
 "%GIT%" branch -m master main >nul 2>&1
-
-"%GIT%" push -u origin main
+"%GIT%" push -f origin main
 
 if %errorlevel% equ 0 (
     echo.
