@@ -18,6 +18,7 @@
 body{background:#ffffff;display:flex;justify-content:center;min-height:100vh}
 .wrap{width:380px;max-width:100%;box-shadow:0 0 60px rgba(0,0,0,.1)}
 .wrap section{width:380px!important;max-width:100%}
+#_bigBtn{position:fixed;bottom:20px;right:16px;z-index:9999;border:1.5px solid #ddd;border-radius:999px;padding:8px 14px;font-size:13px;font-family:inherit;cursor:pointer;box-shadow:0 2px 12px rgba(0,0,0,.15);background:#fff;color:#333;line-height:1.3;text-align:center;transition:background .2s,color .2s}
 @keyframes _fi{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
 @keyframes _su{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:none}}
 @keyframes _si{from{opacity:0;transform:translateX(-20px)}to{opacity:1;transform:none}}
@@ -174,9 +175,11 @@ body{background:#ffffff;display:flex;justify-content:center;min-height:100vh}
       </div></div><div style="border-bottom:1px solid rgba(0,0,0,.07)"><div style="display:flex;align-items:center;justify-content:space-between;padding:11px 0 5px">
         <div style="text-align:left"><div style="font-size:14px;font-weight:600;color:#22a9e2;margin-bottom:2px;font-family:'Nanum Myeongjo',serif;">최서연</div><div style="font-size:13px;color:#3a3630;font-weight:400;font-family:'Nanum Myeongjo',serif;">010-9900-3704</div></div>
         <div style="display:flex;gap:5px;flex-shrink:0"><a href="tel:01099003704" style="display:inline-flex;align-items:center;justify-content:center;border-radius:7px;padding:6px 11px;font-size:11px;font-family:inherit;cursor:pointer;text-decoration:none;white-space:nowrap;background:#22a9e2;color:#fff;border:none;">📞 전화</a><a href="sms:01099003704" style="display:inline-flex;align-items:center;justify-content:center;border-radius:7px;padding:6px 11px;font-size:11px;font-family:inherit;cursor:pointer;text-decoration:none;white-space:nowrap;background:#f1f1f1;color:#444;border:none;">💬 문자</a></div>
-      </div></div></div></details></div></div></section><div style="padding:24px 0;text-align:center">
+      </div></div></div></details></div></div></section><div style="padding:24px 0;text-align:center;display:flex;gap:10px;justify-content:center;flex-wrap:wrap">
+  <button onclick="if(navigator.share){navigator.share({title:document.title,url:location.href}).catch(function(){});}else{alert('이 브라우저는 공유 기능을 지원하지 않아요.');}" style="background:#FEE500;color:#3C1E1E;border:none;border-radius:999px;padding:12px 28px;font-size:14px;cursor:pointer;font-family:inherit;font-weight:700">💬 공유하기</button>
   <button onclick="navigator.clipboard&&navigator.clipboard.writeText(location.href).then(()=>this.textContent='✓ 복사됨!',()=>0);this.textContent='링크 복사 중...'" style="background:#B14A3C;color:#fff;border:none;border-radius:999px;padding:12px 28px;font-size:14px;cursor:pointer;font-family:inherit">🔗 링크 복사</button>
 </div></div>
+<button id="_bigBtn"><span style="font-size:22px;font-weight:700">가</span>+ 크게</button>
 <style>
 #intro-overlay{position:fixed;inset:0;z-index:99999;overflow:hidden;pointer-events:none}
 #intro-veil{position:absolute;inset:0;opacity:1}
@@ -401,5 +404,28 @@ window.addEventListener('pagehide',function(){au.pause();});
   function h(s){return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');}
   function popup(el){var id='rsvpClosed:'+el.getAttribute('data-rsvp-id');try{if(sessionStorage.getItem(id))return;}catch(e){}var bg=document.createElement('div');bg.style.cssText='position:fixed;inset:0;background:rgba(0,0,0,.55);z-index:9998;display:flex;align-items:center;justify-content:center;padding:22px';var color=el.getAttribute('data-rsvp-color')||'#AD9A82';bg.innerHTML='<div style="position:relative;background:#fff;color:#333;border-radius:14px;padding:26px 22px;width:min(330px,100%);text-align:center;box-shadow:0 24px 80px rgba(0,0,0,.28)"><button data-rsvp-x style="position:absolute;top:10px;right:12px;border:0;background:none;font-size:20px;cursor:pointer;color:#777">×</button><div style="font-size:17px;color:'+h(color)+';margin-bottom:12px">'+h(el.getAttribute('data-rsvp-title')||'참석 여부')+'</div><div style="font-size:13px;white-space:pre-wrap;line-height:1.7;margin-bottom:18px">'+h(el.getAttribute('data-rsvp-desc')||'')+'</div><a href="'+h(el.getAttribute('data-rsvp-url')||'#')+'" target="_blank" rel="noopener" style="display:inline-block;background:'+h(color)+';color:#fff;border-radius:8px;padding:11px 24px;text-decoration:none;font-size:13px">'+h(el.getAttribute('data-rsvp-btn')||'전달하기')+'</a></div>';bg.querySelector('[data-rsvp-x]').onclick=function(){try{sessionStorage.setItem(id,'1');}catch(e){}bg.remove();};bg.onclick=function(e){if(e.target===bg){try{sessionStorage.setItem(id,'1');}catch(er){}bg.remove();}};document.body.appendChild(bg);}
   if('IntersectionObserver' in window){var ro=new IntersectionObserver(function(en){en.forEach(function(e){if(e.isIntersecting){popup(e.target);ro.unobserve(e.target);}});},{threshold:0.65});document.querySelectorAll('[data-rsvp-popup]').forEach(function(el){ro.observe(el);});}else{document.querySelectorAll('[data-rsvp-popup]').forEach(popup);}
+})();</script>
+<script>(function(){
+  var SCALE=1.35,KEY='_wbf',on=localStorage.getItem(KEY)==='1';
+  var btn=document.getElementById('_bigBtn');
+  function collect(){
+    return document.querySelectorAll('.wrap [style]');
+  }
+  function apply(active){
+    collect().forEach(function(el){
+      if(el.style.fontSize){
+        if(!el.dataset.ofs)el.dataset.ofs=el.style.fontSize;
+        var base=parseFloat(el.dataset.ofs)||0;
+        el.style.fontSize=(active?Math.round(base*SCALE):base)+'px';
+      }
+    });
+    btn.innerHTML=active?'<span style="font-size:18px;font-weight:700">가</span> 작게':'<span style="font-size:22px;font-weight:700">가</span>+ 크게';
+    btn.style.background=active?'#555':'#fff';
+    btn.style.color=active?'#fff':'#333';
+    on=active;
+    localStorage.setItem(KEY,active?'1':'0');
+  }
+  btn.onclick=function(){apply(!on);};
+  if(on)apply(true);
 })();</script>
 </body></html>
